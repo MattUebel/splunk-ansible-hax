@@ -1,0 +1,11 @@
+- name: create user-seed.conf
+  template:
+    src: user-seed.conf
+    dest: "{{ splunk_home }}/etc/system/local"
+
+- name: start splunk
+  command:
+    argv:
+      - "{{ splunk_home }}/bin/splunk"
+      - start
+      - --accept-license
