@@ -1,0 +1,3 @@
+splunk_admin_user: admin
+splunk_admin_password: changedit
+splunk_home: /opt/splunk

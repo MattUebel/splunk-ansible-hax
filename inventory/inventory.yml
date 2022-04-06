@@ -1,0 +1,10 @@
+all:
+  children:
+    splunk:
+      children:
+        shc:
+          children:
+            search:
+              hosts: {}
+            deployer:
+              hosts: {}

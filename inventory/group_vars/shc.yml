@@ -1,0 +1,9 @@
+shc_pass4symmkey: myshcpass4symmkey
+shc_label: My SHC
+shc_deployer: shc-deployer
+shc_captain: shc-0
+shc_rep_port: 34567
+shc_rep_factor: 2
+
+shc_apps:
+  - name: ds_confs
