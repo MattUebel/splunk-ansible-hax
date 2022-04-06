@@ -1,0 +1,13 @@
+- name: configure pass4SymmKey
+  blockinfile:
+    path: "{{ splunk_home }}/etc/system/local/server.conf"
+    block: |
+      [shclustering]
+      pass4SymmKey = {{ shc_pass4symmkey }}
+      shcluster_label = {{ shc_label }}
+
+- name: restart splunk
+  command:
+    argv:
+      - "{{ splunk_home }}/bin/splunk"
+      - restart
