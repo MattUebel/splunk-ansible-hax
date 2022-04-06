@@ -1,3 +1,7 @@
+splunk_user: splunk
+splunk_group: splunk
 splunk_admin_user: admin
 splunk_admin_password: changedit
 splunk_home: /opt/splunk
+splunk_file: /tmp/splunk.tgz
+splunk_package_url: "https://download.splunk.com/products/splunk/releases/8.2.4.2/linux/splunk-8.2.4.2-bf9a3c20455b-Linux-x86_64.tgz"

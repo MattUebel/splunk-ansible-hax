@@ -1,7 +1,41 @@
+- name: Add splunk group
+  group:
+    name: "{{ splunk_group }}"
+  become: true
+
+- name: Add splunk user
+  user:
+    name: "{{ splunk_user }}"
+    groups: "{{ splunk_group }}"
+    home: "{{ splunk_home }}"
+  become: true
+
+- name: Download Splunk
+  get_url:
+    url: "{{ splunk_package_url }}"
+    dest: "{{ splunk_file }}"
+
+- name: Unarchive Splunk
+  unarchive:
+    src: "{{ splunk_file }}"
+    dest: "{{ splunk_home }}/.."
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    remote_src: true
+  become: true
+  become_user: "{{ splunk_user }}"
+
 - name: create user-seed.conf
   template:
     src: user-seed.conf
     dest: "{{ splunk_home }}/etc/system/local"
+
+- name: optimistic file locking
+  lineinfile:
+    dest: "{{ splunk_home }}/etc/splunk-launch.conf"
+    line: "OPTIMISTIC_ABOUT_FILE_LOCKING=1"
+  become: true
+  become_user: "{{ splunk_user }}"
 
 - name: start splunk
   command:
