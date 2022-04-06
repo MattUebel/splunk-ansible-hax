@@ -1,0 +1,38 @@
+- name: shc init
+  command:
+    argv:
+      - "{{ splunk_home }}/bin/splunk"
+      - init
+      - shcluster-config
+      - -auth
+      - "{{ splunk_admin_user }}:{{ splunk_admin_password }}"
+      - -mgmt_uri
+      - "https://{{ inventory_hostname }}:8089"
+      - -replication_port
+      - "{{ shc_rep_port }}"
+      - -replication_factor
+      - "{{ shc_rep_factor }}"
+      - -conf_deploy_fetch_url
+      - "https://{{ shc_deployer }}:8089"
+      - -secret
+      - "{{ shc_pass4symmkey }}"
+      - -shcluster_label
+      - "{{ shc_label }}"
+
+- name: restart splunk
+  command:
+    argv:
+      - "{{ splunk_home }}/bin/splunk"
+      - restart
+
+- name: shc bootstrap captain
+  command:
+    argv:
+      - "{{ splunk_home }}/bin/splunk"
+      - bootstrap
+      - shcluster-captain
+      - -servers_list
+      - "{% for shc_search in groups['search'] %}{% if loop.index0 %},{% endif %}https://{{ shc_search }}:8089{% endfor %}"
+      - -auth
+      - "{{ splunk_admin_user }}:{{ splunk_admin_password }}"
+  when: inventory_hostname == shc_captain
