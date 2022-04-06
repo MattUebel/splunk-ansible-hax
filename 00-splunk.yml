@@ -1,0 +1,11 @@
+- hosts: splunk
+  roles:
+    - role: splunk
+
+- hosts: deployer
+  roles:
+    - role: shc-deployer
+
+- hosts: search
+  roles:
+    - role: shc-search
